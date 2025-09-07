@@ -1,0 +1,36 @@
+# Base Detectron2 config (edit these to your dataset/paths)
+MODEL:
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  WEIGHTS: "models/model_final.pth"     # <- replace after downloading weights
+  MASK_ON: false
+  RESNETS:
+    DEPTH: 50
+  ROI_HEADS:
+    NUM_CLASSES: 1                       # <- set your number of classes
+  DEVICE: "cuda"                         # "cpu" if no GPU
+
+INPUT:
+  MIN_SIZE_TRAIN: [640]
+  MAX_SIZE_TRAIN: 1024
+  MIN_SIZE_TEST: 640
+  MAX_SIZE_TEST: 1024
+  FORMAT: "BGR"
+
+DATASETS:
+  TRAIN: ("custom_train",)
+  TEST:  ("custom_val",)
+
+DATALOADER:
+  NUM_WORKERS: 2
+
+SOLVER:
+  IMS_PER_BATCH: 2
+  BASE_LR: 0.00025
+  MAX_ITER: 10000
+  STEPS: (7000, 9000)
+  CHECKPOINT_PERIOD: 1000
+
+TEST:
+  EVAL_PERIOD: 1000
+
+OUTPUT_DIR: "build/output"
